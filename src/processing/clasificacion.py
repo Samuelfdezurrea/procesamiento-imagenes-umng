@@ -5,6 +5,7 @@ from processing.bordes import detectar_bordes
 from processing.segmentacion import segmentar
 from utils.histogramas import mostrar_histogramas
 
+
 # === Plantillas de referencia (silhouettes binarias normalizadas) ===
 def _plantillas():
     cam = Image.open("data/ref_camisa.png").convert("L").resize((100, 100))
@@ -49,8 +50,9 @@ def clasificar_prenda(ruta_imagen):
     tipo = _clasificar_por_referencia(imagen_segmentada)
 
     # Paso 5: Color dominante del histograma
-    color = mostrar_histogramas(imagen_original, imagen_segmentada)
-
+    color_info = mostrar_histogramas(imagen_original, imagen_segmentada)
+    color = color_info["Nombre"]
+    
     # Paso 6: BBox para mostrar
     bbox = imagen_segmentada.getbbox() or (0, 0, imagen_original.size[0], imagen_original.size[1])
     minx, miny, maxx, maxy = bbox
